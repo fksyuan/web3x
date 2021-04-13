@@ -1,4 +1,5 @@
 import { bufferToHex, sha3 } from '../utils';
+import {isBech32Address, decodeBech32Address} from '@alayanetwork/web3-utils'
 
 export class Address {
   public static ZERO = new Address(Buffer.alloc(20));
@@ -19,10 +20,16 @@ export class Address {
     if (!Address.isAddress(address)) {
       throw new Error(`Invalid address string: ${address}`);
     }
+    if (isBech32Address(address)) {
+      address = decodeBech32Address(address);
+    }
     return new Address(Buffer.from(address.replace(/^0x/i, ''), 'hex'));
   }
 
   public static isAddress(address: string) {
+    if (isBech32Address(address)) {
+      return true;
+    }
     if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
       // Does not have the basic requirements of an address.
       return false;

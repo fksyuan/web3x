@@ -1,15 +1,15 @@
 {
-  "name": "web3x",
+  "name": "@fksyuan/web3x",
   "version": "4.0.6",
   "license": "LGPL-3.0",
   "description": "Typescript port of web3.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/xf00f/web3x.git"
+    "url": "https://github.com/fksyuan/web3x.git"
   },
-  "homepage": "https://github.com/xf00f/web3x",
+  "homepage": "https://github.com/fksyuan/web3x",
   "bugs": {
-    "url": "https://github.com/xf00f/web3x/issues"
+    "url": "https://github.com/fksyuan/web3x/issues"
   },
   "keywords": [
     "Ethereum",
@@ -75,7 +75,8 @@
     "swarm-js": "^0.1.39",
     "tslib": "^1.9.3",
     "utf8": "^3.0.0",
-    "ws": "^6.1.0"
+    "ws": "^6.1.0",
+    "@alayanetwork/web3-utils": "^0.13.2"
   },
   "devDependencies": {
     "@types/isomorphic-fetch": "^0.0.35",

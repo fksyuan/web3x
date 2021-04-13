@@ -72,63 +72,63 @@ export class EthRequestPayloads {
 
   public getProtocolVersion() {
     return {
-      method: 'eth_protocolVersion',
+      method: 'platon_protocolVersion',
       format: identity<string>(),
     };
   }
 
   public getCoinbase() {
     return {
-      method: 'eth_coinbase',
+      method: 'platon_coinbase',
       format: Address.fromString,
     };
   }
 
   public isMining() {
     return {
-      method: 'eth_mining',
+      method: 'platon_mining',
       format: identity<boolean>(),
     };
   }
 
   public getHashrate() {
     return {
-      method: 'eth_hashrate',
+      method: 'platon_hashrate',
       format: hexToNumber,
     };
   }
 
   public isSyncing() {
     return {
-      method: 'eth_syncing',
+      method: 'platon_syncing',
       format: outputSyncingFormatter,
     };
   }
 
   public getGasPrice() {
     return {
-      method: 'eth_gasPrice',
+      method: 'platon_gasPrice',
       format: outputBigNumberFormatter,
     };
   }
 
   public getAccounts() {
     return {
-      method: 'eth_accounts',
+      method: 'platon_accounts',
       format: (result: string[]) => result.map(Address.fromString),
     };
   }
 
   public getBlockNumber() {
     return {
-      method: 'eth_blockNumber',
+      method: 'platon_blockNumber',
       format: hexToNumber,
     };
   }
 
   public getBalance(address: Address, block?: BlockType) {
     return {
-      method: 'eth_getBalance',
+      method: 'platon_getBalance',
       params: [address.toString().toLowerCase(), inputBlockNumberFormatter(this.resolveBlock(block))],
       format: outputBigNumberFormatter,
     };
@@ -136,7 +136,7 @@ export class EthRequestPayloads {
 
   public getStorageAt(address: Address, position: string, block?: BlockType) {
     return {
-      method: 'eth_getStorageAt',
+      method: 'platon_getStorageAt',
       params: [
         address.toString().toLowerCase(),
         numberToHex(position),
@@ -148,7 +148,7 @@ export class EthRequestPayloads {
 
   public getCode(address: Address, block?: BlockType) {
     return {
-      method: 'eth_getCode',
+      method: 'platon_getCode',
       params: [address.toString().toLowerCase(), inputBlockNumberFormatter(this.resolveBlock(block))],
       format: identity<string>(),
     };
@@ -156,7 +156,7 @@ export class EthRequestPayloads {
 
   public getBlock(block: BlockType | BlockHash, returnTransactionObjects: boolean = false) {
     return {
-      method: isString(block) && isHexStrict(block) ? 'eth_getBlockByHash' : 'eth_getBlockByNumber',
+      method: isString(block) && isHexStrict(block) ? 'platon_getBlockByHash' : 'platon_getBlockByNumber',
       params: [inputBlockNumberFormatter(this.resolveBlock(block)), returnTransactionObjects],
       format: fromRawBlockResponse,
     };
@@ -165,7 +165,7 @@ export class EthRequestPayloads {
   public getUncle(block: BlockType | BlockHash, uncleIndex: number, returnTransactionObjects: boolean = false) {
     return {
       method:
-        isString(block) && isHexStrict(block) ? 'eth_getUncleByBlockHashAndIndex' : 'eth_getUncleByBlockNumberAndIndex',
+        isString(block) && isHexStrict(block) ? 'platon_getUncleByBlockHashAndIndex' : 'platon_getUncleByBlockNumberAndIndex',
       params: [inputBlockNumberFormatter(this.resolveBlock(block)), numberToHex(uncleIndex), returnTransactionObjects],
       format: fromRawBlockResponse,
     };
@@ -175,8 +175,8 @@ export class EthRequestPayloads {
     return {
       method:
         isString(block) && isHexStrict(block)
-          ? 'eth_getBlockTransactionCountByHash'
-          : 'eth_getBlockTransactionCountByNumber',
+          ? 'platon_getBlockTransactionCountByHash'
+          : 'platon_getBlockTransactionCountByNumber',
       params: [inputBlockNumberFormatter(this.resolveBlock(block))],
       format: hexToNumber,
     };
@@ -184,7 +184,7 @@ export class EthRequestPayloads {
 
   public getBlockUncleCount(block: BlockType | BlockHash) {
     return {
-      method: isString(block) && isHexStrict(block) ? 'eth_getUncleCountByBlockHash' : 'eth_getUncleCountByBlockNumber',
+      method: isString(block) && isHexStrict(block) ? 'platon_getUncleCountByBlockHash' : 'platon_getUncleCountByBlockNumber',
       params: [inputBlockNumberFormatter(this.resolveBlock(block))],
       format: hexToNumber,
     };
@@ -192,7 +192,7 @@ export class EthRequestPayloads {
 
   public getTransaction(hash: TransactionHash) {
     return {
-      method: 'eth_getTransactionByHash',
+      method: 'platon_getTransactionByHash',
       params: [hash],
       format: fromRawTransactionResponse,
     };
@@ -202,8 +202,8 @@ export class EthRequestPayloads {
     return {
       method:
         isString(block) && isHexStrict(block)
-          ? 'eth_getTransactionByBlockHashAndIndex'
-          : 'eth_getTransactionByBlockNumberAndIndex',
+          ? 'platon_getTransactionByBlockHashAndIndex'
+          : 'platon_getTransactionByBlockNumberAndIndex',
       params: [inputBlockNumberFormatter(block), numberToHex(index)],
       format: fromRawTransactionResponse,
     };
@@ -211,7 +211,7 @@ export class EthRequestPayloads {
 
   public getTransactionReceipt(hash: TransactionHash) {
     return {
-      method: 'eth_getTransactionReceipt',
+      method: 'platon_getTransactionReceipt',
       params: [hash],
       format: fromRawTransactionReceipt,
     };
@@ -219,7 +219,7 @@ export class EthRequestPayloads {
 
   public getTransactionCount(address: Address, block?: BlockType) {
     return {
-      method: 'eth_getTransactionCount',
+      method: 'platon_getTransactionCount',
       params: [address.toString().toLowerCase(), inputBlockNumberFormatter(this.resolveBlock(block))],
       format: hexToNumber,
     };
@@ -228,7 +228,7 @@ export class EthRequestPayloads {
   public signTransaction(tx: TransactionRequest) {
     tx.from = tx.from || this.defaultFromAddress;
     return {
-      method: 'eth_signTransaction',
+      method: 'platon_signTransaction',
       params: [toRawTransactionRequest(tx)],
       format: identity<SignedTransaction>(),
     };
@@ -236,7 +236,7 @@ export class EthRequestPayloads {
 
   public sendSignedTransaction(data: Data) {
     return {
-      method: 'eth_sendRawTransaction',
+      method: 'platon_sendRawTransaction',
       params: [data],
       format: identity<string>(),
     };
@@ -248,7 +248,7 @@ export class EthRequestPayloads {
       throw new Error('No from addres specified.');
     }
     return {
-      method: 'eth_sendTransaction',
+      method: 'platon_sendTransaction',
       params: [toRawTransactionRequest({ ...tx, from })],
       format: identity<string>(),
     };
@@ -256,7 +256,7 @@ export class EthRequestPayloads {
 
   public sign(address: Address, dataToSign: Data) {
     return {
-      method: 'eth_sign',
+      method: 'platon_sign',
       params: [address.toString().toLowerCase(), inputSignFormatter(dataToSign)],
       format: identity<string>(),
     };
@@ -264,7 +264,7 @@ export class EthRequestPayloads {
 
   public signTypedData(address: Address, dataToSign: { type: string; name: string; value: string }[]) {
     return {
-      method: 'eth_signTypedData',
+      method: 'platon_signTypedData',
       params: [dataToSign, address.toString().toLowerCase()],
       format: identity<string>(),
     };
@@ -273,7 +273,7 @@ export class EthRequestPayloads {
   public call(tx: CallRequest, block?: BlockType) {
     tx.from = tx.from || this.defaultFromAddress;
     return {
-      method: 'eth_call',
+      method: 'platon_call',
       params: [toRawCallRequest(tx), inputBlockNumberFormatter(this.resolveBlock(block))],
       format: identity<string>(),
     };
@@ -282,7 +282,7 @@ export class EthRequestPayloads {
   public estimateGas(tx: EstimateRequest) {
     tx.from = tx.from || this.defaultFromAddress;
     return {
-      method: 'eth_estimateGas',
+      method: 'platon_estimateGas',
       params: [toRawEstimateRequest(tx)],
       format: hexToNumber,
     };
@@ -290,7 +290,7 @@ export class EthRequestPayloads {
 
   public submitWork(nonce: string, powHash: string, digest: string) {
     return {
-      method: 'eth_submitWork',
+      method: 'platon_submitWork',
       params: [nonce, powHash, digest],
       format: identity<boolean>(),
     };
@@ -298,14 +298,14 @@ export class EthRequestPayloads {
 
   public getWork() {
     return {
-      method: 'eth_getWork',
+      method: 'platon_getWork',
       format: identity<string[]>(),
     };
   }
 
   public getPastLogs(options: LogRequest) {
     return {
-      method: 'eth_getLogs',
+      method: 'platon_getLogs',
       params: [toRawLogRequest(options)],
       format: (result: RawLogResponse[]) => result.map(fromRawLogResponse),
     };

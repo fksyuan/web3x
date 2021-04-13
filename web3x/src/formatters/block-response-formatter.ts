@@ -28,13 +28,13 @@ import {
 export interface RawBlockHeaderResponse {
   hash: string | null;
   parentHash: string;
-  sha3Uncles: string;
+  //sha3Uncles: string;
   miner: string;
   stateRoot: string;
   transactionsRoot: string;
   receiptsRoot: string;
   logsBloom: string | null;
-  difficulty: string;
+  //difficulty: string;
   number: string | null;
   gasLimit: string;
   gasUsed: string;
@@ -53,13 +53,13 @@ export interface RawBlockResponse extends RawBlockHeaderResponse {
 export interface BlockHeaderResponse {
   hash: Buffer | null;
   parentHash: Buffer;
-  sha3Uncles: Buffer;
+  //sha3Uncles: Buffer;
   miner: Address;
   stateRoot: Buffer;
   transactionsRoot: Buffer;
   receiptsRoot: Buffer;
   logsBloom: Buffer | null;
-  difficulty: string;
+  //difficulty: string;
   number: number | null;
   gasLimit: number;
   gasUsed: number;
@@ -69,7 +69,7 @@ export interface BlockHeaderResponse {
 }
 
 export interface BlockResponse<T = TransactionResponse | Buffer> extends BlockHeaderResponse {
-  totalDifficulty: string;
+  //totalDifficulty: string;
   size: number;
   transactions: T[];
   uncles: string[];
@@ -79,13 +79,13 @@ export function toRawBlockHeaderResponse(block: BlockHeaderResponse): RawBlockHe
   return {
     hash: block.hash ? bufferToHex(block.hash) : null,
     parentHash: bufferToHex(block.parentHash),
-    sha3Uncles: bufferToHex(block.sha3Uncles),
+    //sha3Uncles: bufferToHex(block.sha3Uncles),
     miner: block.miner.toString(),
     stateRoot: bufferToHex(block.stateRoot),
     transactionsRoot: bufferToHex(block.transactionsRoot),
     receiptsRoot: bufferToHex(block.receiptsRoot),
     logsBloom: block.logsBloom ? bufferToHex(block.logsBloom) : null,
-    difficulty: numberToHex(block.difficulty),
+    //difficulty: numberToHex(block.difficulty),
     number: block.number ? numberToHex(block.number)! : null,
     gasLimit: numberToHex(block.gasLimit)!,
     gasUsed: numberToHex(block.gasUsed)!,
@@ -109,13 +109,13 @@ export function fromRawBlockHeaderResponse(block: RawBlockHeaderResponse): Block
   return {
     hash: block.hash ? hexToBuffer(block.hash) : null,
     parentHash: hexToBuffer(block.parentHash),
-    sha3Uncles: hexToBuffer(block.sha3Uncles),
+    //sha3Uncles: hexToBuffer(block.sha3Uncles),
     miner: Address.fromString(block.miner),
     stateRoot: hexToBuffer(block.stateRoot),
     transactionsRoot: hexToBuffer(block.transactionsRoot),
     receiptsRoot: hexToBuffer(block.receiptsRoot),
     logsBloom: block.logsBloom ? hexToBuffer(block.logsBloom) : null,
-    difficulty: hexToNumberString(block.difficulty),
+    //difficulty: hexToNumberString(block.difficulty),
     number: block.number ? hexToNumber(block.number) : null,
     gasLimit: hexToNumber(block.gasLimit),
     gasUsed: hexToNumber(block.gasUsed),
@@ -128,7 +128,7 @@ export function fromRawBlockHeaderResponse(block: RawBlockHeaderResponse): Block
 export function fromRawBlockResponse(block: RawBlockResponse): BlockResponse {
   return {
     ...fromRawBlockHeaderResponse(block),
-    totalDifficulty: hexToNumberString(block.totalDifficulty),
+    //totalDifficulty: hexToNumberString(block.totalDifficulty),
     size: hexToNumber(block.size),
     transactions: block.transactions.map(tx => (isString(tx) ? hexToBuffer(tx) : fromRawTransactionResponse(tx))),
     uncles: block.uncles,
