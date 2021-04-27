@@ -44,7 +44,6 @@ export interface RawBlockHeaderResponse {
 }
 
 export interface RawBlockResponse extends RawBlockHeaderResponse {
-  totalDifficulty: string;
   size: string;
   transactions: (RawTransactionResponse | string)[];
   uncles: string[];
@@ -98,7 +97,6 @@ export function toRawBlockHeaderResponse(block: BlockHeaderResponse): RawBlockHe
 export function toRawBlockResponse(block: BlockResponse): RawBlockResponse {
   return {
     ...toRawBlockHeaderResponse(block),
-    totalDifficulty: numberToHex(block.totalDifficulty),
     size: numberToHex(block.size)!,
     transactions: block.transactions.map(tx => (Buffer.isBuffer(tx) ? bufferToHex(tx) : toRawTransactionResponse(tx))),
     uncles: block.uncles,
