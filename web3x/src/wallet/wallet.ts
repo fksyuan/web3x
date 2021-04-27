@@ -15,10 +15,12 @@
   along with web3x.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { isNumber } from 'util';
+import { isNumber, isString } from 'util';
 import { Account } from '../account';
 import { Address } from '../address';
 import { decrypt, KeyStore } from '../utils/encryption';
+import { isBech32Address, decodeBech32Address } from '@alayanetwork/web3-utils';
+import {isHexString} from "../ethers/bytes";
 
 const DEFAULT_KEY_NAME = 'web3js_wallet';
 
@@ -82,6 +84,9 @@ export class Wallet {
   public get(addressOrIndex: string | number | Address) {
     if (isNumber(addressOrIndex)) {
       return this.accounts[addressOrIndex];
+    }
+    if (isString(addressOrIndex) && isBech32Address(addressOrIndex)) {
+      addressOrIndex = decodeBech32Address(addressOrIndex);
     }
     return this.accounts.find(a => a && a.address.toString().toLowerCase() === addressOrIndex.toString().toLowerCase());
   }

@@ -18,6 +18,7 @@
 import { isString } from 'util';
 import { Address } from '../address';
 import { Iban } from '../iban';
+import { decodeBech32Address } from '@alayanetwork/web3-utils';
 
 export function inputAddressFormatter(address: string | Iban | Address) {
   if (isString(address)) {
@@ -28,9 +29,7 @@ export function inputAddressFormatter(address: string | Iban | Address) {
         .toString()
         .toLowerCase();
     } else if (Address.isAddress(address)) {
-      return Address.fromString(address)
-        .toString()
-        .toLowerCase();
+      return decodeBech32Address(Address.fromString(address).toString()).toLowerCase();
     }
     throw new Error(`Address ${address} is invalid, the checksum failed, or its an indrect IBAN address.`);
   } else if (address instanceof Iban) {
